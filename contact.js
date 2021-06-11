@@ -50,6 +50,45 @@ const listContact = () => {
     })
 }
 
+const detailContact = (nama) => {
+    const contacts = loadContact();
+
+    const contact = contacts.find(
+        (contact)=> contact.nama.toLowerCase() == nama.toLowerCase()
+    );
+    
+    if(!contact){
+        console.log(chalk.inverse.red.bold(`${nama} tidak ditemukan`));
+        return false;
+    };
+
+    console.log(chalk.inverse.green.bold(contact.nama));
+    console.log(contact.noHP);
+    console.log(contact.order);
+
+}
+
+const deleteContact = (nama) => {
+    const contacts = loadContact();
+
+    // filter contacts lalu timpa data array contact.json dengan array hasil filter
+
+    const newContacts = contacts.filter(
+        (contact) => contact.nama.toLowerCase() !== nama.toLowerCase()
+    );
+
+    // jika nama konatk tidak ada
+
+    if(contacts.length === newContacts.length){
+        console.log(chalk.inverse.red.bold(`${nama} tidak ditemukan`));
+        return false;
+    };
+
+    fs.writeFileSync('data/contacts.json', JSON.stringify(newContacts));
+    console.log(chalk.inverse.green.bold(`data contact ${nama} berhasil dihapus!`));
+
+}
 
 
-module.exports = {simpanContact, listContact};
+
+module.exports = {simpanContact, listContact, detailContact, deleteContact};

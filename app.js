@@ -25,7 +25,7 @@ yargs.command({
         contact.simpanContact(argv.nama, argv.noHP, argv.order);
     },
 })
-.demandCommand()
+.demandCommand();
 
 yargs.command({
     command: 'list',
@@ -33,6 +33,36 @@ yargs.command({
     handler(){
         contact.listContact();
     }
-})
+});
+
+yargs.command({
+    command: 'detail',
+    describe: 'Menampilkan detail contact',
+    builder: {
+        nama: {
+            describe: 'Menampilkan nama',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler(argv){
+        contact.detailContact(argv.nama);
+    }
+});
+
+yargs.command({
+    command: 'remove',
+    describe: 'Menghapus contact dari nama',
+    builder: {
+        nama: {
+            describe: 'Menampilkan nama',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler(argv){
+        contact.deleteContact(argv.nama);
+    }
+});
 
 yargs.parse();
